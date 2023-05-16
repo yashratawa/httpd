@@ -27,7 +27,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: 
+        include:
+          - arch: s390x
+            distro: ubuntu22.04
           # -------------------------------------------------------------------------
           - name: Empty APLOGNO() test
             env: |
