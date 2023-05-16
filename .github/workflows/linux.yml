@@ -29,7 +29,7 @@ jobs:
       matrix:
         include:
           - arch: s390x
-            distro: ubuntu22.04
+            distro: ubuntu22.10
           # -------------------------------------------------------------------------
           - name: Empty APLOGNO() test
             env: |
