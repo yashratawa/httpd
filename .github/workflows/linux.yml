@@ -31,7 +31,7 @@ jobs:
       matrix:
         include:
           - arch: s390x
-            distro: ubuntu18.04
+            distro: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
       - uses: uraimo/run-on-arch-action@v2
@@ -40,6 +40,8 @@ jobs:
         with:
           arch: ${{ matrix.arch }}
           distro: ${{ matrix.distro }}
+          
+          githubToken: ${{ github.token }}
           
           setup: |
             mkdir -p "${PWD}/artifacts"
