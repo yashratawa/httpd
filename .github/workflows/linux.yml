@@ -24,7 +24,7 @@ env:
 
 jobs:
   build_job:
-    runs-on: ubuntu 18.04
+    runs-on: ubuntu 20.04
     name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
       fail-fast: false
@@ -56,6 +56,7 @@ jobs:
             apt-get update -q -y
             apt-get install -q -y git
             ;;
+            esac
           run: |
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
@@ -287,7 +288,7 @@ jobs:
           #     APR_VERSION=1.7.0
           #     APU_VERSION=1.6.3
           # APU_CONFIG="--with-crypto --with-ldap"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     timeout-minutes: 30
     env:
       NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
