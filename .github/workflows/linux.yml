@@ -23,18 +23,50 @@ env:
   CFLAGS: "-g"
 
 jobs:
-  build:
+  build_job:
+    runs-on: ubuntu 18.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - arch: s390x
-            distro: ubuntu22.10
+            distro: ubuntu18.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: uraimo/run-on-arch-action@v2
+        name: Build artifact
+        id: build
+        with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+          
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+            
+          dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
+            
+          env: |
+            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+            
+          shell: /bin/sh
+          
+          install: |
+            apt-get update -q -y
+            apt-get install -q -y git
+            ;;
+          run: |
+            cp $(which git) "/artifacts/${artifact_name}"
+            echo "Produced artifact at /artifacts/${artifact_name}"
+      - name: show the artifact
+        run: |
+          ls -al "${PWD}/artifacts"
           # -------------------------------------------------------------------------
           - name: Empty APLOGNO() test
-            env: |
-              SKIP_TESTING=1
-              TEST_LOGNO=1
+              env: |
+                SKIP_TESTING=1
+                TEST_LOGNO=1
           # -------------------------------------------------------------------------
           - name: Default
           # -------------------------------------------------------------------------
@@ -267,7 +299,8 @@ jobs:
     - name: apt refresh
       run: sudo apt-get -o Acquire::Retries=5 update
     - name: Install prerequisites
-      run: sudo apt-get install -o Acquire::Retries=5
+      run: sudo apt-get install -o Acquire::Retries=5 update
+           sudo apt-get install -o Acquire::Retries=5
                     cpanminus libtool-bin libapr1-dev libaprutil1-dev
                     liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
                     libnghttp2-dev libjansson-dev libpcre2-dev gdb
