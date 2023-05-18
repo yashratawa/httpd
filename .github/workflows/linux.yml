@@ -292,10 +292,10 @@ jobs:
 #                         #<s390x-package1> <s390x-package2> ...
 
     - uses: actions/checkout@v3
-#     - uses: uraimo/run-on-arch-action@v2
-      #with: 
-       # arch: s390x
-        #distro : ubuntu20.04
+    - uses: uraimo/run-on-arch-action@v2
+      with: 
+        arch: s390x
+        distro : fedora_latest
     - name: Cache APR build
       uses: actions/cache@v3
       env:
