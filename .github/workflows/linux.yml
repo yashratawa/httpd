@@ -24,14 +24,14 @@ env:
 
 jobs:
   build:
-    #runs-on: ubuntu-20.04
-    #name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+    runs-on: ubuntu-20.04
+    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - arch: s390x
-            distro: ubuntu18.04
+            distro: ubuntu20.04
           # -------------------------------------------------------------------------
           - name: Empty APLOGNO() test
             env: |
@@ -257,29 +257,43 @@ jobs:
           #     APR_VERSION=1.7.0
           #     APU_VERSION=1.6.3
           # APU_CONFIG="--with-crypto --with-ldap"
-    runs-on: ubuntu-20.04
+   # runs-on: ubuntu-20.04
+    #name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     timeout-minutes: 30
     env:
       NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
       CONFIG: ${{ matrix.config }}
-    name: ${{ matrix.name }}
+    #name: ${{ matrix.name }}
     steps:
-      
     - name: Set environment variables
       run: echo "${{ matrix.env }}" >> $GITHUB_ENV
     - name: apt refresh
       run: sudo apt-get -o Acquire::Retries=5 update
+#     - name: Install prerequisites
+#       run: sudo apt-get install -o Acquire::Retries=5
+#                     cpanminus libtool-bin libapr1-dev libaprutil1-dev
+#                     liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
+#                     libnghttp2-dev libjansson-dev libpcre2-dev gdb
+#                     perl-doc ${{ matrix.pkgs }}
     - name: Install prerequisites
-      run: sudo apt-get install -o Acquire::Retries=5
-                    cpanminus libtool-bin libapr1-dev libaprutil1-dev
-                    liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
-                    libnghttp2-dev libjansson-dev libpcre2-dev gdb
-                    perl-doc ${{ matrix.pkgs }}
+      run: |
+        sudo apt-get -o Acquire::Retries=5 update
+        sudo apt-get install -o Acquire::Retries=5
+                        cpanminus libtool-bin libapr1-dev libaprutil1-dev
+                        liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
+                        libnghttp2-dev libjansson-dev libpcre2-dev gdb
+                        perl-doc ${{ matrix.pkgs }}
+        # Add s390x-specific packages here
+        libc6-dev-s390x libexpat1-dev:s390x libssl-dev:s390x libz-dev:s390x
+        libpcre2-dev:s390x libldap2-dev:s390x libnghttp2-dev:s390x libjansson-dev:s390x libbrotli-dev:s390x libtool-bin
+        sudo apt-get install -o Acquire::Retries=5
+                        #<s390x-package1> <s390x-package2> ...
+
     - uses: actions/checkout@v3
-    - uses: uraimo/run-on-arch-action@v2
-      with: 
-        arch: s390x
-        distro : ubuntu20.04
+#     - uses: uraimo/run-on-arch-action@v2
+      #with: 
+       # arch: s390x
+        #distro : ubuntu20.04
     - name: Cache APR build
       uses: actions/cache@v3
       env:
