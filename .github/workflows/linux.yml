@@ -23,53 +23,17 @@ env:
   CFLAGS: "-g"
 
 jobs:
-  build_job:
-    runs-on: ubuntu 20.04
-    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
+  build:
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - arch: s390x
-            distro: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v3
-      - uses: uraimo/run-on-arch-action@v2
-        name: Build artifact
-        id: build
-        with:
-          arch: ${{ matrix.arch }}
-          distro: ${{ matrix.distro }}
-          
-          githubToken: ${{ github.token }}
-          
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-            
-          dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
-            
-          env: |
-            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-            
-          shell: /bin/sh
-          
-          install: |
-            apt-get update -q -y
-            apt-get install -q -y git
-            ;;
-            esac
-          run: |
-            cp $(which git) "/artifacts/${artifact_name}"
-            echo "Produced artifact at /artifacts/${artifact_name}"
-      - name: show the artifact
-        run: |
-          ls -al "${PWD}/artifacts"
+        include: 
           # -------------------------------------------------------------------------
           - name: Empty APLOGNO() test
-              env: |
-                SKIP_TESTING=1
-                TEST_LOGNO=1
+            env: |
+              SKIP_TESTING=1
+              TEST_LOGNO=1
           # -------------------------------------------------------------------------
           - name: Default
           # -------------------------------------------------------------------------
@@ -290,53 +254,51 @@ jobs:
           #     APR_VERSION=1.7.0
           #     APU_VERSION=1.6.3
           # APU_CONFIG="--with-crypto --with-ldap"
-          runs-on: ubuntu-18.04
-          timeout-minutes: 30
-          env:
-            NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
-            CONFIG: ${{ matrix.config }}
-          name: ${{ matrix.name }}
-          steps:
-            - name: Set environment variables
-            run: echo "${{ matrix.env }}" >> $GITHUB_ENV
-            - name: apt refresh
-            run: sudo apt-get -o Acquire::Retries=5 update
-            - name: Install prerequisites
-            run: sudo apt-get install -o Acquire::Retries=5 update
-                  sudo apt-get install -o Acquire::Retries=5
+    #runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
+      CONFIG: ${{ matrix.config }}
+    name: ${{ matrix.name }}
+    steps:
+    - name: Set environment variables
+      run: echo "${{ matrix.env }}" >> $GITHUB_ENV
+    - name: apt refresh
+      run: sudo apt-get -o Acquire::Retries=5 update
+    - name: Install prerequisites
+      run: sudo apt-get install -o Acquire::Retries=5
                     cpanminus libtool-bin libapr1-dev libaprutil1-dev
                     liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
                     libnghttp2-dev libjansson-dev libpcre2-dev gdb
                     perl-doc ${{ matrix.pkgs }}
-           - uses: actions/checkout@v3
-          - name: Cache APR build
-            uses: actions/cache@v3    
-            env:
-              cache-name: cache-apru
-            with:
-              path: ~/root
-              key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('/home/runner/root/.key-*') }}
-          - name: Cache CPAN modules
-            uses: actions/cache@v3
-            env:
-              cache-name: cache-cpan
-          with:
-            path: ~/perl5
-            key: ${{ runner.os }}-cpan-${{ env.cache-name }}-${{ hashFiles('/home/runner/perl5/.key') }}
-            - name: Configure environment
-          run: ./test/travis_before_linux.sh
-            timeout-minutes: 15
-            - uses: actions/upload-artifact@v3
-            if: failure()
-            with:
-              name: config.log ${{ matrix.node-version }}
-              path: |
-                /home/runner/build/**/config.log
-          - name: Build and test
-            run: ./test/travis_run_linux.sh
-            - uses: actions/upload-artifact@v3
-            if: failure()
-            with:
-              name: error_log ${{ matrix.node-version }}
-                path: test/perl-framework/t/logs/error_log
-
+    - uses: actions/checkout@v3
+    - name: Cache APR build
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-apru
+      with:
+        path: ~/root
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('/home/runner/root/.key-*') }}
+    - name: Cache CPAN modules
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-cpan
+      with:
+        path: ~/perl5
+        key: ${{ runner.os }}-cpan-${{ env.cache-name }}-${{ hashFiles('/home/runner/perl5/.key') }}
+    - name: Configure environment
+      run: ./test/travis_before_linux.sh
+      timeout-minutes: 15
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: config.log ${{ matrix.node-version }}
+        path: |
+          /home/runner/build/**/config.log
+    - name: Build and test
+      run: ./test/travis_run_linux.sh
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: error_log ${{ matrix.node-version }}
+        path: test/perl-framework/t/logs/error_log
