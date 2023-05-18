@@ -264,6 +264,7 @@ jobs:
       CONFIG: ${{ matrix.config }}
     name: ${{ matrix.name }}
     steps:
+      
     - name: Set environment variables
       run: echo "${{ matrix.env }}" >> $GITHUB_ENV
     - name: apt refresh
@@ -276,6 +277,9 @@ jobs:
                     perl-doc ${{ matrix.pkgs }}
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2
+      with: 
+        arch: s390x
+        distro : ubuntu20.04
     - name: Cache APR build
       uses: actions/cache@v3
       env:
