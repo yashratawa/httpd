@@ -267,10 +267,10 @@ jobs:
     steps:
     - name: Set environment variables
       run: echo "${{ matrix.env }}" >> $GITHUB_ENV
-    - name: apt refresh
-      run: 
-       sudo apt-get install -y cpanminus
-       sudo apt-get -o Acquire::Retries=5 update
+    #- name: apt refresh
+     # run: 
+      # sudo apt-get install -y cpanminus
+       #sudo apt-get -o Acquire::Retries=5 update
 #     - name: Install prerequisites
 #       run: sudo apt-get install -o Acquire::Retries=5
 #                     cpanminus libtool-bin libapr1-dev libaprutil1-dev
@@ -279,6 +279,8 @@ jobs:
 #                     perl-doc ${{ matrix.pkgs }}
     - name: Install prerequisites
       run: |
+        sudo apt-get install -y cpanminus
+        sudo apt-get -o Acquire::Retries=5 update
         sudo apt-get install -o Acquire::Retries=5
                         cpanminus libtool-bin libapr1-dev libaprutil1-dev
                         liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
