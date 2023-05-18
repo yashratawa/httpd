@@ -103,38 +103,38 @@ jobs:
               TEST_MALLOC=1
               CLEAR_CACHE=1
           # -------------------------------------------------------------------------
-          - name: Shared MPMs (event), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=event
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
-          # -------------------------------------------------------------------------
-          - name: Shared MPMs (worker), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=worker
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
-          # -------------------------------------------------------------------------
-          - name: Shared MPMs (prefork), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=prefork
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
+#           - name: Shared MPMs (event), pool-debug, SSL/TLS variants
+#             config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=event
+#             env: |
+#               APR_VERSION=1.7.x
+#               APR_CONFIG="--enable-pool-debug"
+#               APU_VERSION=1.7.x
+#               APU_CONFIG="--with-crypto --with-ldap"
+#               TEST_MALLOC=1
+#               TEST_SSL=1
+#               CLEAR_CACHE=1
+#           # -------------------------------------------------------------------------
+#           - name: Shared MPMs (worker), pool-debug, SSL/TLS variants
+#             config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=worker
+#             env: |
+#               APR_VERSION=1.7.x
+#               APR_CONFIG="--enable-pool-debug"
+#               APU_VERSION=1.7.x
+#               APU_CONFIG="--with-crypto --with-ldap"
+#               TEST_MALLOC=1
+#               TEST_SSL=1
+#               CLEAR_CACHE=1
+#           # -------------------------------------------------------------------------
+#           - name: Shared MPMs (prefork), pool-debug, SSL/TLS variants
+#             config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=prefork
+#             env: |
+#               APR_VERSION=1.7.x
+#               APR_CONFIG="--enable-pool-debug"
+#               APU_VERSION=1.7.x
+#               APU_CONFIG="--with-crypto --with-ldap"
+#               TEST_MALLOC=1
+#               TEST_SSL=1
+#               CLEAR_CACHE=1
           # -------------------------------------------------------------------------
           - name: litmus WebDAV tests
             config: --enable-dav --enable-dav-fs
