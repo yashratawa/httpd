@@ -282,6 +282,7 @@ jobs:
       with:
         arch: s390x
         distro: ubuntu20.04
+        run : git --version
         
         setup: |
             mkdir -p "${PWD}/artifacts"
