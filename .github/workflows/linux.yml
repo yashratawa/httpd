@@ -281,11 +281,9 @@ jobs:
 #           pip install .[dev]      
     - name: Install prerequisites
       run: sudo apt-get install -o Acquire::Retries=5
-           sudo apt-get install python3-multipart
-
-                    cpanminus libtool-bin libapr1-dev libaprutil1-dev
-                    liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
-                    libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}
+           cpanminus libtool-bin libapr1-dev libaprutil1-dev
+           liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
+           libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}
 #                     libc6-dev-s390x libexpat1-dev:s390x libssl-dev:s390x 
 #                     libz-dev:s390x libpcre2-dev:s390x libldap2-dev:s390x libnghttp2-dev:s390x 
 #                     libjansson-dev:s390x libbrotli-dev:s390x 
@@ -334,7 +332,10 @@ jobs:
               apk update
               apk add git
             ;;
-        esac        
+        esac  
+        run: |
+          cp $(which git) "/artifacts/${artifact_name}"
+          echo "Produced artifact at /artifacts/${artifact_name}"
     - name: Cache APR build
       uses: actions/cache@v3
       env:
