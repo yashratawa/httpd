@@ -24,6 +24,8 @@ env:
 
 jobs:
   build:
+  run-on-architecture:
+    runs-on: ubuntu20.04
     strategy:
       fail-fast: false
       matrix:
@@ -253,7 +255,7 @@ jobs:
           #     APR_VERSION=1.7.0
           #     APU_VERSION=1.6.3
           # APU_CONFIG="--with-crypto --with-ldap"
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
       NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
@@ -271,6 +273,63 @@ jobs:
                     libnghttp2-dev libjansson-dev libpcre2-dev gdb
                     perl-doc ${{ matrix.pkgs }}
     - uses: actions/checkout@v3
+    - uses: uraimo/run-on-arch-action@v2
+      name: Build artifact
+      id: build
+      with:
+          arch: ${{ matrix.arch }}
+          distro: ${{ matrix.distro }}
+
+          # Not required, but speeds up builds
+          githubToken: ${{ github.token }}
+
+          # Create an artifacts directory
+          setup: |
+            mkdir -p "${PWD}/artifacts"
+
+          # Mount the artifacts directory as /artifacts in the container
+          dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
+
+          # Pass some environment variables to the container
+          env: | # YAML, but pipe character is necessary
+            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+
+          # The shell to run commands with in the container
+          shell: /bin/sh
+
+          # Install some dependencies in the container. This speeds up builds if
+          # you are also using githubToken. Any dependencies installed here will
+          # be part of the container image that gets cached, so subsequent
+          # builds don't have to re-install them. The image layer is cached
+          # publicly in your project's package repository, so it is vital that
+          # no secrets are present in the container state or logs.
+          install: |
+            case "${{ matrix.distro }}" in
+              ubuntu*|jessie|stretch|buster|bullseye)
+                apt-get update -q -y
+                apt-get install -q -y git
+                ;;
+              fedora*)
+                dnf -y update
+                dnf -y install git which
+                ;;
+              alpine*)
+                apk update
+                apk add git
+                ;;
+            esac
+
+          # Produce a binary artifact and place it in the mounted volume
+          run: |
+            cp $(which git) "/artifacts/${artifact_name}"
+            echo "Produced artifact at /artifacts/${artifact_name}"
+
+    - name: Show the artifact
+        # Items placed in /artifacts in the container will be in
+        # ${PWD}/artifacts on the host.
+      run: |
+          ls -al "${PWD}/artifacts"
     - name: Cache APR build
       uses: actions/cache@v3
       env:
