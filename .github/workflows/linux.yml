@@ -283,15 +283,25 @@ jobs:
         arch: s390x
         distro: ubuntu20.04
         
+        dockerRunArgs: |
+            --volume "${PWD}/artifacts:/artifacts"
+        
+        shell: /bin/sh
+        
         install: |
           apt-get update -q -y
           apt-get install -q -y git
         
         run: |
-            docker run --platform linux/s390x ubuntu20.04
+            --platform linux/s390x ubuntu20.04
             artifact_name = my artifact
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
+    - name: Show the artifact
+        # Items placed in /artifacts in the container will be in
+        # ${PWD}/artifacts on the host.
+      run: |
+        ls -al "${PWD}/artifacts"
       
       
         
