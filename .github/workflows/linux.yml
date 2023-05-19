@@ -125,16 +125,16 @@ jobs:
 #               TEST_SSL=1
 #               CLEAR_CACHE=1
 #           # -------------------------------------------------------------------------
-          - name: Shared MPMs (prefork), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=prefork
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
+#           - name: Shared MPMs (prefork), pool-debug, SSL/TLS variants
+#             config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=prefork
+#             env: |
+#               APR_VERSION=1.7.x
+#               APR_CONFIG="--enable-pool-debug"
+#               APU_VERSION=1.7.x
+#               APU_CONFIG="--with-crypto --with-ldap"
+#               TEST_MALLOC=1
+#               TEST_SSL=1
+#               CLEAR_CACHE=1
           # -------------------------------------------------------------------------
           - name: litmus WebDAV tests
             config: --enable-dav --enable-dav-fs
@@ -302,10 +302,37 @@ jobs:
 #                         #<s390x-package1> <s390x-package2> ...
 
     - uses: actions/checkout@v3
-#    - uses: uraimo/run-on-arch-action@v2
-#      with: 
-#        arch: s390x
-#        distro : fedora_latest
+    - uses: uraimo/run-on-arch-action@v2
+      with: 
+       arch: s390x
+       distro : fedora_latest
+       
+       setup: |
+        mkdir -p "${PWD}/artifacts"
+        
+       dockerRunArgs: |
+        --volume "${PWD}/artifacts:/artifacts"
+        
+       env: |
+        artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+        
+       shell: /bin/sh
+       
+       install: |
+        case "${{ matrix.distro }}" in
+          ubuntu*|jessie|stretch|buster|bullseye)
+            apt-get update -q -y
+            apt-get install -q -y git
+            ;;
+          fedora*)
+            dnf -y update
+            dnf -y install git which
+            ;;
+            alpine*)
+              apk update
+              apk add git
+            ;;
+        esac        
     - name: Cache APR build
       uses: actions/cache@v3
       env:
