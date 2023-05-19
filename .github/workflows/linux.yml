@@ -283,10 +283,13 @@ jobs:
         arch: s390x
         distro: ubuntu20.04
         
-#         dockerRunArgs: |
-#             --volume "${PWD}/artifacts:/artifacts"
+        setup: |
+            mkdir -p "${PWD}/artifacts"
         
-#         shell: /bin/sh
+        dockerRunArgs: |
+           --volume "${PWD}/artifacts:/artifacts"
+        
+        shell: /bin/sh
         
 #         install: |
 #           apt-get update -q -y
