@@ -283,27 +283,27 @@ jobs:
         arch: s390x
         distro: ubuntu20.04
         
-        dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
+#         dockerRunArgs: |
+#             --volume "${PWD}/artifacts:/artifacts"
         
-        shell: /bin/sh
+#         shell: /bin/sh
         
-        install: |
-          apt-get update -q -y
-          apt-get install -q -y git
-          apt-get install docker
+#         install: |
+#           apt-get update -q -y
+#           apt-get install -q -y git
+#           sudo apt-get install docker
         
-        run: |
-            docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-            --platform=s390x
-            artifact_name = my artifact
-            cp $(which git) "/artifacts/${artifact_name}"
-            echo "Produced artifact at /artifacts/${artifact_name}"
-    - name: Show the artifact
-        # Items placed in /artifacts in the container will be in
-        # ${PWD}/artifacts on the host.
-      run: |
-        ls -al "${PWD}/artifacts"
+#         run: |
+#             docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+#             --platform=s390x
+#             artifact_name = my artifact
+#             cp $(which git) "/artifacts/${artifact_name}"
+#             echo "Produced artifact at /artifacts/${artifact_name}"
+#     - name: Show the artifact
+#         # Items placed in /artifacts in the container will be in
+#         # ${PWD}/artifacts on the host.
+#       run: |
+#         ls -al "${PWD}/artifacts"
       
       
         
