@@ -280,14 +280,16 @@ jobs:
       name: build Artifact
       id: build
       with:
-        arch: ${{ matrix.arch }}
-        distro: ${{ matrix.distro }}
+        arch: s390x
+        distro: ubuntu20.04
         
         install: |
           apt-get update -q -y
           apt-get install -q -y git
         
         run: |
+            docker run --platform linux/s390x ubuntu20.04
+            artifact_name = my artifact
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
       
