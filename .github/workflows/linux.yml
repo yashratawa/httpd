@@ -278,8 +278,9 @@ jobs:
     
     - uses: uraimo/run-on-arch-action@v2
     - name: build Artifact
-      run: chmod +x /root/run-on-arch-install.sh && /root/run-on-arch-install.sh
-      id: build
+      run: |
+        chmod +x /root/run-on-arch-install.sh
+        /root/run-on-arch-install.sh
 #       with:
 #         arch: s390x
 #         distro: ubuntu20.04
