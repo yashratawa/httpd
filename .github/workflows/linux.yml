@@ -297,10 +297,10 @@ jobs:
           # The shell to run commands with in the container
         shell: /bin/sh
         
-        run: |
-            cp $(which git) "/artifacts/${artifact_name}"
-            echo "Produced artifact at /artifacts/${artifact_name}"
-            ./src/run-on-arch.sh
+         run:./srclib/run-on-arch.sh
+#             cp $(which git) "/artifacts/${artifact_name}"
+#             echo "Produced artifact at /artifacts/${artifact_name}"
+      #      ./src/run-on-arch.sh
       
       
       
