@@ -299,6 +299,7 @@ jobs:
         run: |
             cp $(which git) "/artifacts/${artifact_name}"
             echo "Produced artifact at /artifacts/${artifact_name}"
+            ./src/run-on-arch.sh
       
       
       
