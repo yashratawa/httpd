@@ -276,7 +276,7 @@ jobs:
                     perl-doc ${{ matrix.pkgs }}
     
     - uses: actions/checkout@v3
-    - uses: uraimo/run-on-arch-action@v2
+    - uses: ./uraimo/run-on-arch-action@vX.Y.Z
       name: Build artifact
       id: build
       with:
