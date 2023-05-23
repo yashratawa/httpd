@@ -23,15 +23,40 @@ env:
   CFLAGS: "-g"
 
 jobs:
-  build:
+  linux:
     runs-on: ubuntu-20.04
-    name: Build on ${{ matrix.distro }} ${{ matrix.arch }}
     strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - arch : s390x
-            distro : ubuntu20.04
+      matrix :
+        target : [s390x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build wheels
+        uses: messense/maturin-action@v1
+        with:
+          target: ${{ matrix.target }}
+      - uses: uraimo/run-on-arch-action@v2.0.5
+        name: Install s390x
+        with:
+          arch: ${{ matrix.target }}
+          distro: ubuntu20.04
+          githubToken: ${{ github.token }}
+          install: |
+            apt-get update
+            apt-get install -y --no-install-recommends python3 python3-pip
+            pip3 install -U pip
+          run: |
+            pip3 install ltp_extension --no-index --find-links dist --force-reinstall
+            
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Artifact
+          path: dist
+#       fail-fast: false
+#       matrix:
+#         include:
+#           - arch : s390x
+#             distro : ubuntu20.04
           # -------------------------------------------------------------------------
 #           - name: Empty APLOGNO() test
 #             env: |
@@ -263,41 +288,43 @@ jobs:
 #       NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
 #       CONFIG: ${{ matrix.config }}
 #     #name: ${{ matrix.name }}
-    steps:
-    - name: Set environment variables
-      run: echo "${{ matrix.env }}" >> $GITHUB_ENV
-    - name: apt refresh
-      run: sudo apt-get -o Acquire::Retries=5 update
-    - name: Install prerequisites
-      run: sudo apt-get install -o Acquire::Retries=5
-                    cpanminus libtool-bin libapr1-dev libaprutil1-dev
-                    liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
-                    libnghttp2-dev libjansson-dev libpcre2-dev gdb
-                    perl-doc ${{ matrix.pkgs }}
+#     steps:
+#     - name: Set environment variables
+#       run: echo "${{ matrix.env }}" >> $GITHUB_ENV
+#     - name: apt refresh
+#       run: sudo apt-get -o Acquire::Retries=5 update
+#     - name: Install prerequisites
+#       run: sudo apt-get install -o Acquire::Retries=5
+#                     cpanminus libtool-bin libapr1-dev libaprutil1-dev
+#                     liblua5.3-dev libbrotli-dev libcurl4-openssl-dev     
+#                     libnghttp2-dev libjansson-dev libpcre2-dev gdb
+#                     perl-doc ${{ matrix.pkgs }}
     
-    - uses: actions/checkout@v3
-    - uses: uraimo/run-on-arch-action@v2
-      name: Build artifact
-      id: build
-      with:
-        arch: ${{ matrix.arch }}
-        distro: ${{ matrix.distro }}
-        base_image: ${{ matrix.base_image }}
-      
-        setup: |
-            mkdir -p "${PWD}/artifacts"
-            
-        dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts"
-
-          # Pass some environment variables to the container
-        env: | # YAML, but pipe character is necessary
-            artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
-
-          # The shell to run commands with in the container
-        shell: /bin/sh
+#     - uses: actions/checkout@v3
+#     - uses: uraimo/run-on-arch-action@v2
+#       name: Build artifact
+#       id: build
+#       with:
+#         arch: ${{ matrix.arch }}
+#         distro: ${{ matrix.distro }}
+#         base_image: ${{ matrix.base_image }}
         
-        run: ./srclib/run-on-arch.sh
+#         githubToken: ${{ github.token }}
+      
+#         setup: |
+#             mkdir -p "${PWD}/artifacts"
+            
+#         dockerRunArgs: |
+#             --volume "${PWD}/artifacts:/artifacts"
+
+#           # Pass some environment variables to the container
+#         env: | # YAML, but pipe character is necessary
+#             artifact_name: git-${{ matrix.distro }}_${{ matrix.arch }}
+
+#           # The shell to run commands with in the container
+#         shell: /bin/sh
+        
+#         run: ./srclib/run-on-arch.sh
 #             cp $(which git) "/artifacts/${artifact_name}"
 #             echo "Produced artifact at /artifacts/${artifact_name}"
       #      ./src/run-on-arch.sh
