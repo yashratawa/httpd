@@ -44,8 +44,8 @@ jobs:
             apt-get update
 #            apt-get install -y --no-install-recommends python3 python3-pip
 #            pip3 install -U pip
-          run: |
-            ./srclib/run-on-arch.sh
+#           run: |
+#             ./srclib/run-on-arch.sh
             
       - name: Upload artifact
         uses: actions/upload-artifact@v2
