@@ -29,12 +29,12 @@ jobs:
       matrix :
         target : [s390x]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 #       - name: Build wheels
 #         uses: messense/maturin-action@v1
 #         with:
 #           target: ${{ matrix.target }}
-      - uses: uraimo/run-on-arch-action@v2.0.5
+      - uses: uraimo/run-on-arch-action@v2.5.0
         name: Install s390x
         with:
           arch: ${{ matrix.target }}
