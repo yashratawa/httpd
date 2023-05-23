@@ -3,8 +3,8 @@
 set -euo pipefail
 
 # Args
-DOCKERFILE=$1
-CONTAINER_NAME=$2
+DOCKERFILE = yashratawa/httpd/dockerfile/Dockerfile.s390x.ubuntu20.04
+CONTAINER_NAME = httpContainer
 # Remainder of args get passed to docker
 declare -a DOCKER_RUN_ARGS=${@:3:${#@}}
 
