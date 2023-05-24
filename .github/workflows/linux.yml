@@ -27,6 +27,11 @@ jobs:
     runs-on: ubuntu-20.04
     strategy:
       matrix :
+        include :
+          - name: Empty APLOGNO() test
+            env: |
+              SKIP_TESTING=1
+              TEST_LOGNO=1
         target : [s390x]
     steps:
       - uses: actions/checkout@v3
