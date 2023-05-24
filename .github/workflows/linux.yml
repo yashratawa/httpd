@@ -57,8 +57,8 @@ jobs:
 #            pip3 install -U pip
 
           run: |
-            #uname -a
-            #echo ::set-output name=uname::$(uname -a)
+            uname -a
+            echo ::set-output name=uname::$(uname -a)
             chmod +x ./srclib/run-on-arch.sh
             
       - name: Get the output
