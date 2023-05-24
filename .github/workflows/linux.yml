@@ -61,6 +61,10 @@ jobs:
             #echo ::set-output name=uname::$(uname -a)
             chmod +x ./srclib/run-on-arch.sh
             
+      - name: Get the output
+        run: |
+          echo "The uname output was ${{ steps.runcmd.outputs.uname }}"
+            
 #       - name: Upload artifact
 #         uses: actions/upload-artifact@v2
 #         with:
