@@ -32,6 +32,12 @@ jobs:
             env: |
               SKIP_TESTING=1
               TEST_LOGNO=1
+              
+#   *****************************************************************
+
+          - name: All-static modules
+            config: --enable-mods-static=reallyall
+            
         target : [s390x]
     steps:
       - uses: actions/checkout@v3
