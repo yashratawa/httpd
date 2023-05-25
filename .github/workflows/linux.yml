@@ -234,9 +234,27 @@ jobs:
 
           run: |
             chmod +x ./srclib/run-on-arch.sh
-#            ./srclib/run-on-arch.sh
+            ./srclib/run-on-arch.sh
 #            uname -a
 #            echo ::set-output name=uname::$(uname -a)
+
+      - name: Configure environment
+        run: ./test/travis_before_linux.sh
+        timeout-minutes: 15
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: config.log ${{ matrix.node-version }}
+          path: |
+            /home/runner/build/**/config.log
+      - name: Build and test
+        run: ./test/travis_run_linux.sh
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: error_log ${{ matrix.node-version }}
+          path: test/perl-framework/t/logs/error_log
+
 
         
 ######################################################################################        
