@@ -5,7 +5,7 @@ set -euo pipefail
 # Args
 DOCKERFILE = yashratawa/httpd/dockerfile/Dockerfile.s390x.ubuntu20.04
 CONTAINER_NAME = httpContainer
-# Remainder of args get passed to docker
+# Remainder of args get passed to docke
 declare -a DOCKER_RUN_ARGS=${@:3:${#@}}
 
 # Defaults
