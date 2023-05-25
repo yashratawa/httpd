@@ -237,7 +237,6 @@ jobs:
             ./srclib/run-on-arch.sh
 #            uname -a
 #            echo ::set-output name=uname::$(uname -a)
-#            chmod +x ./srclib/run-on-arch.sh
 
         
 ######################################################################################        
