@@ -3,11 +3,8 @@
 set -euo pipefail
 
 # Args
-DOCKERFILE = FROM s390x/ubuntu:20.04
-
-COPY ./run-on-arch-install.sh /root/run-on-arch-install.sh
-RUN chmod +x /root/run-on-arch-install.sh && /root/run-on-arch-install.sh
-CONTAINER_NAME = $2
+DOCKERFILE=$1
+CONTAINER_NAME=$2
 # Remainder of args get passed to docke
 declare -a DOCKER_RUN_ARGS=${@:3:${#@}}
 
