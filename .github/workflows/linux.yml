@@ -234,12 +234,11 @@ jobs:
 
           run: |
             chmod +x ./srclib/run-on-arch.sh
+            ./srclib/run-on-arch.sh
 #            uname -a
 #            echo ::set-output name=uname::$(uname -a)
 #            chmod +x ./srclib/run-on-arch.sh
 
-      - name: Configure environment
-        run: ./test/travis_before_linux.sh
         
 ######################################################################################        
             
