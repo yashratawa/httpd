@@ -39,7 +39,7 @@ install_deps () {
   apt-get -qq install -y qemu qemu-user-static
   #apt-get install docker
   #sudo docker pull multiarch/qemu-user-static
-  sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
+  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
 }
 
 build_container () {
