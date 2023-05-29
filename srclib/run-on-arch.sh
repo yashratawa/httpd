@@ -32,14 +32,29 @@ quiet () {
 }
 
 install_deps () {
+  
   # Install support for non-x86 emulation in Docker via QEMU.
   # Platforms: linux/arm64, linux/riscv64, linux/ppc64le, linux/s390x,
   #            linux/386, linux/arm/v7, linux/arm/v6
   apt-get update -q -y
   apt-get -qq install -y qemu qemu-user-static
-  apt-get install docker -y
+  #apt-get install docker -y
   #sudo docker pull multiarch/qemu-user-static
-  sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
+  #apt update
+
+  apt install apt-transport-https ca-certificates curl software-properties-common -y
+
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+
+  add-apt-repository "deb [arch=s390x] https://download.docker.com/linux/ubuntu focal stable"
+
+  apt-cache policy docker-ce
+
+  apt install docker-ce -y
+
+
+
+  docker run --rm --privileged multiarch/qemu-user-static --reset -p yes --credential yes
 }
 
 build_container () {
