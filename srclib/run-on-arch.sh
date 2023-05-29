@@ -10,7 +10,6 @@ declare -a DOCKER_RUN_ARGS=${@:3:${#@}}
 
 # Defaults
 ACTION_DIR="$(cd "$(dirname "$0")"/.. >/dev/null 2>&1 ; pwd -P)"
-echo $ACTION_DIR
 LOWERCASE_REPOSITORY=$(printf "%s" "$GITHUB_REPOSITORY" | tr '[:upper:]' '[:lower:]')
 PACKAGE_REGISTRY="ghcr.io/${LOWERCASE_REPOSITORY}/${CONTAINER_NAME}"
 DEBIAN_FRONTEND=noninteractive
