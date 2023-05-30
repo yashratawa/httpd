@@ -23,10 +23,10 @@ env:
   CFLAGS: "-g"
 
 jobs:
-  linux:
-    runs-on: ubuntu-20.04
+  build:
     strategy:
       matrix :
+        target: [s390x]
         include :
           - name: Empty APLOGNO() test
             env: |
@@ -213,8 +213,7 @@ jobs:
               TEST_INSTALL=1
               TEST_MOD_TLS=1
               CLEAR_CACHE=1
-            
-        target : [s390x]
+    runs-on: ubuntu20.04        
     steps:
       - uses: actions/checkout@v3
 #       - name: Build wheels
