@@ -233,8 +233,9 @@ jobs:
 #            pip3 install -U pip
 
           run: |
-            chmod +x ./srclib/run-on-arch.sh
-            ./srclib/run-on-arch.sh
+            ./test/travis_run_linux.sh
+            #chmod +x ./srclib/run-on-arch.sh
+            #./srclib/run-on-arch.sh
 #            uname -a
 #            echo ::set-output name=uname::$(uname -a)
 
