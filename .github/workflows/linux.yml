@@ -233,6 +233,7 @@ jobs:
 #            pip3 install -U pip
 
           run: |
+            chmod +x ./test/travis_run_linux.sh
             ./test/travis_run_linux.sh
 #            uname -a
 #            echo ::set-output name=uname::$(uname -a)
