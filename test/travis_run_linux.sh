@@ -29,7 +29,7 @@ fi
 ### Debian packages helpfully install them, so use the system APR to buildconf
 apt install libapr1 libaprutil1 -y
 #apt install apr -y
-exit 0
+#exit 0
 #export PATH="/usr/bin:$PATH"
 ./buildconf --with-apr=/usr/bin/apr-1-config ${BUILDCONFIG}
 
