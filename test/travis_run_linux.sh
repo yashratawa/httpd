@@ -85,7 +85,7 @@ fi
 
 builddir=$PWD
 echo $srcdir
-$srcdir/configure --prefix=$PREFIX $CONFIG
+$srcdir/configure.in --prefix=$PREFIX $CONFIG
 make $MFLAGS
 
 if test -v TEST_INSTALL; then
