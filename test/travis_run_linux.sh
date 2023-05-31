@@ -29,9 +29,6 @@ fi
 ### Debian packages helpfully install them, so use the system APR to buildconf
 #apt install libapr1 libaprutil1 -y
 apt-get install libapr1-dev -y
-#apt install apr -y
-#exit 0
-#export PATH="/usr/bin:$PATH"
 ./buildconf --with-apr=/usr/bin/apr-1-config ${BUILDCONFIG}
 
 PREFIX=${PREFIX:-$HOME/build/httpd-root}
@@ -46,6 +43,7 @@ if test ! -v SKIP_TESTING; then
     fi
 
     # Use the CPAN environment.
+    cpan local::lib
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
 if test -v APR_VERSION; then
@@ -85,8 +83,7 @@ fi
 
 builddir=$PWD
 echo $srcdir
-chmod +x $srcdir/configure.in
-$srcdir/configure.in --prefix=$PREFIX $CONFIG
+$srcdir/configure --prefix=$PREFIX $CONFIG
 make $MFLAGS
 
 if test -v TEST_INSTALL; then
