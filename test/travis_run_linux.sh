@@ -85,6 +85,7 @@ fi
 
 builddir=$PWD
 echo $srcdir
+chmod +x $srcdir/configure.in
 $srcdir/configure.in --prefix=$PREFIX $CONFIG
 make $MFLAGS
 
