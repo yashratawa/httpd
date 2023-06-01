@@ -43,8 +43,7 @@ if test ! -v SKIP_TESTING; then
     fi
 
     # Use the CPAN environment.
-    apt-get install cpan -y
-    cpan local::lib
+    curl -L https://cpanmin.us | perl - --sudo App::cpanminus
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
 if test -v APR_VERSION; then
