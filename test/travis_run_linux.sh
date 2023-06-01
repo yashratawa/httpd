@@ -44,6 +44,7 @@ if test ! -v SKIP_TESTING; then
 
     # Use the CPAN environment.
     curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+    cpan local::lib
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
 if test -v APR_VERSION; then
