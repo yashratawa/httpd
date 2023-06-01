@@ -44,8 +44,8 @@ if test ! -v SKIP_TESTING; then
 
     # Use the CPAN environment.
     apt install curl -y
-    cpan PerlIO
     curl -L https://cpanmin.us | perl - --sudo App::cpanminus
+    cpan PerlIO
     cpan local::lib
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
