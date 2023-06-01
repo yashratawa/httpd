@@ -43,6 +43,7 @@ if test ! -v SKIP_TESTING; then
     fi
 
     # Use the CPAN environment.
+    apt install build-essential -y
     apt install curl -y
     apt install cpanminus -y
     apt install libperlio-gzip-perl
