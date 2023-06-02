@@ -51,7 +51,7 @@ if test ! -v SKIP_TESTING; then
     #curl -L https://cpanmin.us | sudo perl - --sudo App::cpanminus
     #apt install cpanminus -y
     #--force cpanm PerlIO -y
-    cpan local::lib -y
+    echo yes | cpan local::lib -y
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
 if test -v APR_VERSION; then
