@@ -90,7 +90,6 @@ if test -v TEST_VPATH; then
 fi
 
 builddir=$PWD
-echo $srcdir
 $srcdir/configure --prefix=$PREFIX $CONFIG
 make $MFLAGS
 
