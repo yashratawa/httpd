@@ -92,7 +92,7 @@ fi
 builddir=$PWD
 echo $srcdir
 #$srcdir/configure --prefix=$PREFIX $CONFIG
-make $MFLAGS
+#make $MFLAGS
 
 if test -v TEST_INSTALL; then
    make install
