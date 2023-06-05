@@ -52,22 +52,8 @@ jobs:
 #            pip3 install -U pip
 
 #    - uses: actions/checkout@v3
-    - name: Cache APR build
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-apru
-      with:
-        path: ~/root
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('/home/runner/root/.key-*') }}
-    - name: Cache CPAN modules
-      uses: actions/cache@v3
-      env:
-        cache-name: cache-cpan
-      with:
-        path: ~/perl5
-        key: ${{ runner.os }}-cpan-${{ env.cache-name }}-${{ hashFiles('/home/runner/perl5/.key') }}
 
-        run: |
+          run: |
             apt-get install -y make cpanminus libtool-bin libapr1-dev libaprutil1-dev liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc 
             ./test/travis_before_linux.sh
             ./test/travis_run_linux.sh
