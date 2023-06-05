@@ -55,6 +55,8 @@ jobs:
 
           run: |
             apt-get install -y make cpanminus libtool-bin libapr1-dev libaprutil1-dev liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc
+            /usr/bin/tar -xf /home/runner/work/_temp/1d625d34-cbcd-4fdc-8d7a-59509340fdef/cache.tzst -P -C /home/runner/work/httpd/httpd --use-compress-program unzstd
+            /usr/bin/tar -xf /home/runner/work/_temp/dfa88eac-b2ac-4af2-8d3f-5f58d500e07d/cache.tzst -P -C /home/runner/work/httpd/httpd --use-compress-program unzstd
             echo ::restore-keys cache-apru,cache-cpan
             ./test/travis_before_linux.sh
             #./test/travis_run_linux.sh
