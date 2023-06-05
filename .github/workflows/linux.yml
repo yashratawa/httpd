@@ -40,6 +40,18 @@ jobs:
         target : [s390x]
     steps:
     - uses: actions/checkout@v3
+    - uses: uraimo/run-on-arch-action@v2.5.0
+      name: Install s390x
+      with:
+          arch: ${{ matrix.target }}
+          distro: ubuntu20.04
+          githubToken: ${{ github.token }}
+          install: |
+            apt-get update
+#            apt-get install -y --no-install-recommends python3 python3-pip
+#            pip3 install -U pip
+
+#    - uses: actions/checkout@v3
     - name: Cache APR build
       uses: actions/cache@v3
       env:
@@ -53,23 +65,9 @@ jobs:
         cache-name: cache-cpan
       with:
         path: ~/perl5
-        key: ${{ runner.os }}-cpan-${{ env.cache-name }}-${{ hashFiles('/home/runner/perl5/.key') }}      
-#       - name: Build wheels
-#         uses: messense/maturin-action@v1
-#         with:
-#           target: ${{ matrix.target }}
-    - uses: uraimo/run-on-arch-action@v2.5.0
-      name: Install s390x
-      with:
-          arch: ${{ matrix.target }}
-          distro: ubuntu20.04
-          githubToken: ${{ github.token }}
-          install: |
-            apt-get update
-#            apt-get install -y --no-install-recommends python3 python3-pip
-#            pip3 install -U pip
+        key: ${{ runner.os }}-cpan-${{ env.cache-name }}-${{ hashFiles('/home/runner/perl5/.key') }}
 
-          run: |
+        run: |
             apt-get install -y make cpanminus libtool-bin libapr1-dev libaprutil1-dev liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc 
             ./test/travis_before_linux.sh
             ./test/travis_run_linux.sh
