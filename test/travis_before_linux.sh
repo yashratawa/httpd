@@ -18,7 +18,7 @@ cat /etc/hosts
 # tries to connect via ::1, which fails/times out.
 if grep ip6-localhost /etc/hosts; then
     apt-get install sudo
-    # sudo sed -i "/ip6-/d" /etc/hosts
+    sudo sed -i "/ip6-/d" /etc/hosts
     cat /etc/hosts
 fi
 
