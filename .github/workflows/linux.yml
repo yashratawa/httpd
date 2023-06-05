@@ -37,13 +37,13 @@ jobs:
  
          
             
-        target : [s390x]
+        #target : [s390x]
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
       name: Install s390x
       with:
-          arch: ${{ matrix.target }}
+          arch: s390x
           distro: ubuntu20.04
           githubToken: ${{ github.token }}
           install: |
