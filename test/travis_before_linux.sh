@@ -102,7 +102,7 @@ if ! test -v SKIP_TESTING; then
     pkgs="Net::SSL LWP::Protocol::https                                 \
            LWP::Protocol::AnyEvent::http ExtUtils::Embed Test::More     \
            AnyEvent DateTime HTTP::DAV FCGI                             \
-           AnyEvent::WebSocket::Client Apache::Test"
+           # AnyEvent::WebSocket::Client Apache::Test"
 
     # CPAN modules are to be used with the system Perl and always with
     # CC=gcc, e.g. for the CC="gcc -m32" case the builds are not correct
