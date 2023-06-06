@@ -16,12 +16,10 @@ cat /etc/hosts
 # that Apache::Test only configures the server to Listen on 0.0.0.0
 # (that is hard-coded), but then Apache::TestSerer::wait_till_is_up()
 # tries to connect via ::1, which fails/times out.
-
-# if grep ip6-localhost /etc/hosts; then
-#     apt-get install sudo
-#     sudo sed -i "/ip6-/d" /etc/hosts
-#     cat /etc/hosts
-# fi
+if grep ip6-localhost /etc/hosts; then
+    sudo sed -i "/ip6-/d" /etc/hosts
+    cat /etc/hosts
+fi
 
 # Use a rudimental retry workflow as workaround to svn export hanging for minutes.
 # Travis automatically kills a build if one step takes more than 10 minutes without
@@ -73,6 +71,11 @@ function install_apx() {
     # Blow away the cached install root if the cached install is stale
     # or doesn't match the expected configuration.
     grep -q "${version} ${revision} ${config} CC=$CC" ${HOME}/root/.key-${name} || rm -rf ${prefix}
+    # TEST_H2 APR cache seems to be broken, do not use.
+    # Unknown why this happens on this CI job only and how to fix it
+    if test -v TEST_H2; then
+      rm -rf ${prefix}
+    fi
 
     if test -d ${prefix}; then
         return 0
@@ -102,7 +105,7 @@ if ! test -v SKIP_TESTING; then
     pkgs="Net::SSL LWP::Protocol::https                                 \
            LWP::Protocol::AnyEvent::http ExtUtils::Embed Test::More     \
            AnyEvent DateTime HTTP::DAV FCGI                             \
-           # AnyEvent::WebSocket::Client Apache::Test"
+           AnyEvent::WebSocket::Client Apache::Test"
 
     # CPAN modules are to be used with the system Perl and always with
     # CC=gcc, e.g. for the CC="gcc -m32" case the builds are not correct
