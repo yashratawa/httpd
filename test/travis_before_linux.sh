@@ -17,7 +17,7 @@ cat /etc/hosts
 # (that is hard-coded), but then Apache::TestSerer::wait_till_is_up()
 # tries to connect via ::1, which fails/times out.
 if grep ip6-localhost /etc/hosts; then
-    sudo sed -i "/ip6-/d" /etc/hosts
+    sed -i "/ip6-/d" /etc/hosts
     cat /etc/hosts
 fi
 
