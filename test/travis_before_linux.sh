@@ -112,7 +112,7 @@ if ! test -v SKIP_TESTING; then
     # CPAN modules are to be used with the system Perl and always with
     # CC=gcc, e.g. for the CC="gcc -m32" case the builds are not correct
     # otherwise.
-    CC=gcc cpanm --notest $pkgs
+    #CC=gcc cpanm --notest $pkgs
 
     # Set cache key.
     echo $pkgs > ~/perl5/.key
@@ -121,7 +121,7 @@ if ! test -v SKIP_TESTING; then
     # Make a shallow clone of httpd-tests git repo.
     git clone --depth=1 https://github.com/apache/httpd-tests.git test/perl-framework
 fi
-exit 0
+#exit 0
 
 # For LDAP testing, run slapd listening on port 8389 and populate the
 # directory as described in t/modules/ldap.t in the test framework:
@@ -138,6 +138,7 @@ if test -v TEST_SSL; then
        ./scripts/redis-init.sh
     popd
 fi
+exit 0
 
 if test -v TEST_OPENSSL3; then
     # Build the requested version of OpenSSL if it's not already
