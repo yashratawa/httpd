@@ -107,7 +107,7 @@ if ! test -v SKIP_TESTING; then
            AnyEvent DateTime HTTP::DAV FCGI                             \
            AnyEvent::WebSocket::Client Apache::Test"
            
-    exit 0
+    #exit 0
 
     # CPAN modules are to be used with the system Perl and always with
     # CC=gcc, e.g. for the CC="gcc -m32" case the builds are not correct
@@ -168,6 +168,7 @@ if test -v TEST_OPENSSL3; then
     fi
 fi
 exit 0
+
 
 if test -v APR_VERSION; then
     install_apx apr ${APR_VERSION} "${APR_CONFIG}"
