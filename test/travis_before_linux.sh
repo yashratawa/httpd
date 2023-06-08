@@ -182,3 +182,4 @@ if test -v APU_VERSION; then
     install_apx apr-util ${APU_VERSION} "${APU_CONFIG}" --with-apr=$HOME/build/apr-${APR_VERSION}
     ldd $HOME/root/apr-util-${APU_VERSION}/lib/libaprutil-?.so || true
 fi
+exit 0
