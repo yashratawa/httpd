@@ -138,7 +138,7 @@ if test -v TEST_SSL; then
        ./scripts/redis-init.sh
     popd
 fi
-exit 0
+#exit 0
 
 if test -v TEST_OPENSSL3; then
     # Build the requested version of OpenSSL if it's not already
