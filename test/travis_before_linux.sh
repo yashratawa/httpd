@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/bash -xe 
 
 if test -v CLEAR_CACHE; then
     rm -rf $HOME/root
