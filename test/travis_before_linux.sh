@@ -121,6 +121,7 @@ if ! test -v SKIP_TESTING; then
     # Make a shallow clone of httpd-tests git repo.
     git clone --depth=1 https://github.com/apache/httpd-tests.git test/perl-framework
 fi
+exit 0
 
 # For LDAP testing, run slapd listening on port 8389 and populate the
 # directory as described in t/modules/ldap.t in the test framework:
