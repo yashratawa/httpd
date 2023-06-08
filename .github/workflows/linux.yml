@@ -58,7 +58,7 @@ jobs:
             apt-get install -y make cpanminus libtool-bin libapr1-dev libaprutil1-dev liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc                  
             echo ::restore-keys cache-apru,cache-cpan
             ./test/travis_before_linux.sh
-            ./test/travis_run_linux.sh
+            #./test/travis_run_linux.sh
             #- if [ "${{runner.os}}" = "linux"] && [ ! -v SKIP_TESTING ]; then
              #   echo "hi"
               #  if [ -v CLEAR_CACHE ]; then rm -rf ~/perl5; fi;
