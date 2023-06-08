@@ -169,7 +169,7 @@ if test -v TEST_OPENSSL3; then
         exit 1
     fi
 fi
-exit 0
+#exit 0
 
 
 if test -v APR_VERSION; then
