@@ -106,6 +106,8 @@ if ! test -v SKIP_TESTING; then
            LWP::Protocol::AnyEvent::http ExtUtils::Embed Test::More     \
            AnyEvent DateTime HTTP::DAV FCGI                             \
            AnyEvent::WebSocket::Client Apache::Test"
+           
+    exit 0
 
     # CPAN modules are to be used with the system Perl and always with
     # CC=gcc, e.g. for the CC="gcc -m32" case the builds are not correct
