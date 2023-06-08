@@ -16,10 +16,10 @@ cat /etc/hosts
 # that Apache::Test only configures the server to Listen on 0.0.0.0
 # (that is hard-coded), but then Apache::TestSerer::wait_till_is_up()
 # tries to connect via ::1, which fails/times out.
-if grep ip6-localhost /etc/hosts; then
-    sed -i "/ip6-/d" /etc/hosts
-    cat /etc/hosts
-fi
+# if grep ip6-localhost /etc/hosts; then
+#     sed -i "/ip6-/d" /etc/hosts
+#     cat /etc/hosts
+# fi
 
 # Use a rudimental retry workflow as workaround to svn export hanging for minutes.
 # Travis automatically kills a build if one step takes more than 10 minutes without
