@@ -74,8 +74,8 @@ jobs:
      
 
           run: |
-            apt-get install -y make git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
-            liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev \
+            apt-get install -y make python3-pytest nghttp2-client python3-cryptography python3-requests python3-multipart git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
+            liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
             libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}                  
             echo ::restore-keys cache-apru,cache-cpan
             ./test/travis_before_linux.sh
