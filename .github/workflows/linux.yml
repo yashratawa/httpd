@@ -51,7 +51,7 @@ jobs:
  
          
             
-        #target : [s390x]
+        target : [s390x]
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
