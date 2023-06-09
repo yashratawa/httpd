@@ -43,15 +43,14 @@ if test ! -v SKIP_TESTING; then
     fi
 
     # Use the CPAN environment.
-#     apt install build-essential -y
-#     apt install curl -y
-#     apt install cpanminus -y
-#     apt install libperlio-gzip-perl
+    apt install build-essential -y
+    apt install curl -y
+    apt install cpanminus -y
+    apt install libperlio-gzip-perl
     
     #curl -L https://cpanmin.us | sudo perl - --sudo App::cpanminus
-    #apt install cpanminus -y
     #--force cpanm PerlIO -y
-    #echo yes | cpan local::lib -y
+    echo yes | cpan local::lib -y
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
 fi
 if test -v APR_VERSION; then
