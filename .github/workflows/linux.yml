@@ -74,10 +74,11 @@ jobs:
      
 
           run: |
-            apt-get install -y make python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
+            apt-get install -y make cpan python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
             liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
             libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}                  
             echo ::restore-keys cache-apru,cache-cpan
+            cpan install Apache::Test5005compat
             ./test/travis_before_linux.sh
             ./test/travis_run_linux.sh
             #- if [ "${{runner.os}}" = "linux"] && [ ! -v SKIP_TESTING ]; then
