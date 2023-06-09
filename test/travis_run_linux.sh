@@ -48,7 +48,7 @@ if test ! -v SKIP_TESTING; then
     apt install cpanminus -y
     apt install libperlio-gzip-perl
     
-    #curl -L https://cpanmin.us | sudo perl - --sudo App::cpanminus
+    curl -L https://cpanmin.us | sudo perl - --sudo App::cpanminus
     #--force cpanm PerlIO -y
     echo yes | cpan local::lib -y
     eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
