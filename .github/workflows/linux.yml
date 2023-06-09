@@ -37,7 +37,7 @@ jobs:
           
           - name: HTTP/2 test suite
             config: --enable-mods-shared=reallyall --with-mpm=event --enable-mpms-shared=all
-            pkgs: curl python3-pytest nghttp2-client python3-cryptography python3-requests
+            pkgs: curl python3-pytest nghttp2-client python3-cryptography python3-requests python3-multipart
             env: |
               APR_VERSION=1.7.4
               APU_VERSION=1.6.3
@@ -63,7 +63,7 @@ jobs:
       name: ${{ matrix.name }}
       with:
           arch: s390x
-          distro: ubuntu20.04
+          distro: ubuntu22.04
           githubToken: ${{ github.token }}
           install: |
             apt-get update
@@ -74,7 +74,7 @@ jobs:
      
 
           run: |
-            apt-get install -y make python3-pytest nghttp2-client python3-cryptography python3-requests python3-multipart git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
+            apt-get install -y make python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
             liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
             libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}                  
             echo ::restore-keys cache-apru,cache-cpan
