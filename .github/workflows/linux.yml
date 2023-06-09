@@ -55,7 +55,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: uraimo/run-on-arch-action@v2.5.0
-      name: Install s390x
+    
+      env:
+        NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
+        CONFIG: ${{ matrix.config }}    
+    
+      name: ${{ matrix.name }}
       with:
           arch: s390x
           distro: ubuntu20.04
@@ -66,9 +71,12 @@ jobs:
 #            pip3 install -U pip
 
 #    - uses: actions/checkout@v3
+     
 
           run: |
-            apt-get install -y make git cpanminus libtool-bin libapr1-dev libaprutil1-dev liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev libpcre2-dev gdb perl-doc                  
+            apt-get install -y make git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
+            liblua5.3-dev libbrotli-dev libcurl4-openssl-dev   libnghttp2-dev libjansson-dev \
+            libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}                  
             echo ::restore-keys cache-apru,cache-cpan
             ./test/travis_before_linux.sh
             ./test/travis_run_linux.sh
