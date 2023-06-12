@@ -35,6 +35,17 @@ jobs:
           # -------------------------------------------------------------------------
           - name: Default
           
+          - name: Shared MPMs (event), pool-debug, SSL/TLS variants
+            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=event
+            env: |
+              APR_VERSION=1.7.x
+              APR_CONFIG="--enable-pool-debug"
+              APU_VERSION=1.7.x
+              APU_CONFIG="--with-crypto --with-ldap"
+              TEST_MALLOC=1
+              TEST_SSL=1
+              CLEAR_CACHE=1           
+          
           - name: HTTP/2 test suite
             config: --enable-mods-shared=reallyall --with-mpm=event --enable-mpms-shared=all
             pkgs: curl python3-pytest nghttp2-client python3-cryptography python3-requests python3-multipart
@@ -46,22 +57,9 @@ jobs:
               TEST_INSTALL=1
               TEST_H2=1
               TEST_CORE=1
-              TEST_PROXY=1
-              
-          - name: Shared MPMs (event), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=event
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1          
+              TEST_PROXY=1       
           
- 
-         
-            
+             
         #target : [s390x]
     steps:
     - uses: actions/checkout@v3
@@ -71,7 +69,7 @@ jobs:
         NOTEST_CFLAGS: ${{ matrix.notest-cflags }}
         CONFIG: ${{ matrix.config }}    
     
-      name: ${{ matrix.name }}
+      name: Build and Test
       with:
           arch: s390x
           distro: ubuntu22.04
