@@ -63,15 +63,14 @@ if test -v APU_VERSION; then
 else
     CONFIG="$CONFIG --with-apr-util=/usr"
 fi
+
+apt install sudo
 sudo visudo
-
 root ALL = (ALL:ALL) ALL
-
 %admin ALL=(ALL) ALL
-
 % sudo ALL=(ALL:ALL) ALL
-
 sudo usermod -aG sudo myuser
+
 # Since librustls is not a package (yet) on any platform, we
 # build the version we want from source
 if test -v TEST_MOD_TLS; then
