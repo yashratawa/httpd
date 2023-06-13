@@ -182,7 +182,7 @@ if ! test -v SKIP_TESTING; then
     fi
 
     if test -v TEST_SSL -a $RV -eq 0; then
-        pushd test/perl-framework
+        whoami pushd test/perl-framework
             # Test loading encrypted private keys
             ./t/TEST -defines "TEST_SSL_DES3_KEY TEST_SSL_PASSPHRASE_EXEC" t/ssl
             RV=$?
