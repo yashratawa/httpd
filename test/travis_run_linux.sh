@@ -65,6 +65,7 @@ else
 fi
 
 apt install sudo
+apt-get install vim
 sudo visudo
 root ALL = (ALL:ALL) ALL
 %admin ALL=(ALL) ALL
