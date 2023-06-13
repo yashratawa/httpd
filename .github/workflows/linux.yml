@@ -44,7 +44,57 @@ jobs:
               APU_CONFIG="--with-crypto --with-ldap"
               TEST_MALLOC=1
               TEST_SSL=1
-              CLEAR_CACHE=1           
+              CLEAR_CACHE=1     
+              
+          - name: litmus WebDAV tests
+            config: --enable-dav --enable-dav-fs
+            env: |
+              LITMUS=1
+              TESTS="t/modules/dav.t"
+            pkgs: litmus
+            
+          - name: Prefork MPM, all-modules (except cgid)
+            config: --enable-mods-shared=reallyall --with-mpm=prefork --disable-cgid
+          # -------------------------------------------------------------------------
+          - name: Worker MPM, all-modules
+            config: --enable-mods-shared=reallyall --with-mpm=worker
+          # -------------------------------------------------------------------------
+          - name: Shared MPMs, all-modules
+            config: --enable-mods-shared=reallyall --enable-mpms-shared=all
+          # -------------------------------------------------------------------------
+          - name: Event MPM, all-modules, mod_cgid only
+            config: --enable-mods-shared=reallyall --with-mpm=event --disable-cgi
+          # -------------------------------------------------------------------------
+          - name: Event MPM, all-modules, no CMSG_DATA
+            config: --enable-mods-shared=reallyall --with-mpm=event ac_cv_have_decl_CMSG_DATA=no
+          # -------------------------------------------------------------------------
+          - name: Default, all-modules + install
+            config: --enable-mods-shared=reallyall
+            env: |
+              TEST_INSTALL=1
+              APACHE_TEST_EXTRA_ARGS=-v
+          # -------------------------------------------------------------------------
+          - name: Default, all-modules, random test order
+            config: --enable-mods-shared=reallyall
+            env: |
+              TEST_ARGS=-order=random
+          # -------------------------------------------------------------------------
+          - name: GCC 10 maintainer-mode w/-Werror, install + VPATH
+            config: --enable-mods-shared=reallyall --enable-maintainer-mode
+            notest-cflags: -Werror -O2
+            env: |
+              CC=gcc-10
+              TEST_VPATH=1
+              TEST_INSTALL=1
+              SKIP_TESTING=1
+          # -------------------------------------------------------------------------
+          - name: All-modules, APR 1.7.4, APR-util 1.6.3
+            config: --enable-mods-shared=reallyall
+            env: |
+              APR_VERSION=1.7.4
+              APU_VERSION=1.6.3
+              APU_CONFIG="--with-crypto --with-ldap"            
+            
           
           - name: HTTP/2 test suite
             config: --enable-mods-shared=reallyall --with-mpm=event --enable-mpms-shared=all
