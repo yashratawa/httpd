@@ -133,6 +133,16 @@ jobs:
      
 
           run: |
+            apt install sudo
+            apt-get install vim
+            sudo usermod -aG sudo myuser
+            sudo visudo
+            root ALL = (ALL:ALL) ALL
+            %admin ALL=(ALL) ALL
+            % myuser ALL=(ALL:ALL) ALL
+            su myuser
+            
+            
             apt-get install -y make python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
             liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
             libpcre2-dev gdb perl-doc ${{ matrix.pkgs }}                  
