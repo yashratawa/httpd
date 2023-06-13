@@ -135,7 +135,7 @@ jobs:
           run: |
             apt install sudo -y
             apt-get install vim -y
-            sudo usermod -aG sudo myuser
+            sudo usermod -aG myuser
             sudo visudo
             root ALL = (ALL:ALL) ALL
             %admin ALL=(ALL) ALL
