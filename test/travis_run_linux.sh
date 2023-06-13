@@ -1,4 +1,4 @@
-#!/bin/bash -ex
+#!/bin/bash -ex 
 
 # Test for APLOGNO() macro errors (duplicates, empty args) etc.  For
 # trunk, run the updater script to see if it fails.  If it succeeds
