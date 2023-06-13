@@ -133,8 +133,8 @@ jobs:
      
 
           run: |
-            apt install sudo
-            apt-get install vim
+            apt install sudo -y
+            apt-get install vim -y
             sudo usermod -aG sudo myuser
             sudo visudo
             root ALL = (ALL:ALL) ALL
