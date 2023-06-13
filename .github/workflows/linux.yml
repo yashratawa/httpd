@@ -133,15 +133,17 @@ jobs:
      
 
           run: |
-            apt install sudo -y
-            apt-get install vim -y
-            sudo useradd -G myuser
-            sudo visudo
-            root ALL = (ALL:ALL) ALL
-            %admin ALL=(ALL) ALL
-            % myuser ALL=(ALL:ALL) ALL
-            su myuser
-            
+            # apt install sudo -y
+            # apt-get install vim -y
+            # sudo useradd -G myuser
+            # sudo visudo
+            # root ALL = (ALL:ALL) ALL
+            # %admin ALL=(ALL) ALL
+            # % myuser ALL=(ALL:ALL) ALL
+            # su myuser
+            useradd test -ms /bin/bash
+            echo "test ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+            su test            
             
             apt-get install -y make python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
             liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
