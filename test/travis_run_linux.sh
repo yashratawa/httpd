@@ -64,13 +64,13 @@ else
     CONFIG="$CONFIG --with-apr-util=/usr"
 fi
 
-apt install sudo
-apt-get install vim
-sudo visudo
-root ALL = (ALL:ALL) ALL
-%admin ALL=(ALL) ALL
-% sudo ALL=(ALL:ALL) ALL
-sudo usermod -aG sudo myuser
+# apt install sudo
+# apt-get install vim
+# sudo visudo
+# root ALL = (ALL:ALL) ALL
+# %admin ALL=(ALL) ALL
+# % sudo ALL=(ALL:ALL) ALL
+# sudo usermod -aG sudo myuser
 
 # Since librustls is not a package (yet) on any platform, we
 # build the version we want from source
