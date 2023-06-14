@@ -141,7 +141,10 @@ jobs:
             # %admin ALL=(ALL) ALL
             # % myuser ALL=(ALL:ALL) ALL
             # su myuser
-            useradd test -ms /bin/bash
+            apt-get install vim -y
+            apt install sudo -y
+            useradd test -m -s /bin/bash
+            sudo visudo
             echo "test ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
             su test            
             
