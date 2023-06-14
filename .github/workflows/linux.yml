@@ -133,14 +133,14 @@ jobs:
      
 
           run: |
-            # apt install sudo -y
-            # apt-get install vim -y
-            # sudo useradd -G myuser
-            # sudo visudo
-            # root ALL = (ALL:ALL) ALL
-            # %admin ALL=(ALL) ALL
-            # % myuser ALL=(ALL:ALL) ALL
-            # su myuser
+            apt install sudo -y
+            apt-get install vim -y
+            sudo useradd -G myuser
+            sudo visudo
+            root ALL = (ALL:ALL) ALL
+            %admin ALL=(ALL) ALL
+            % myuser ALL=(ALL:ALL) ALL
+            su myuser
             # apt-get install vim -y
             # apt install sudo -y
             # useradd test -m -s /bin/bash
