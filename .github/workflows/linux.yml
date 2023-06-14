@@ -32,7 +32,7 @@ jobs:
             env: |
               SKIP_TESTING=1
               TEST_LOGNO=1
-          # -------------------------------------------------------------------------
+          # --------------------------------------------------------------------------
           - name: Default
           
           - name: Shared MPMs (event), pool-debug, SSL/TLS variants
