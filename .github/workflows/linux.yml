@@ -140,7 +140,7 @@ jobs:
             root ALL = (ALL:ALL) ALL
             %admin ALL=(ALL) ALL
             % myuser ALL=(ALL:ALL) ALL
-            su myuser
+            #su myuser
             # apt-get install vim -y
             # apt install sudo -y
             # useradd test -m -s /bin/bash
