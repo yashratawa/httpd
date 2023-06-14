@@ -141,12 +141,12 @@ jobs:
             # %admin ALL=(ALL) ALL
             # % myuser ALL=(ALL:ALL) ALL
             # su myuser
-            apt-get install vim -y
-            apt install sudo -y
-            useradd test -m -s /bin/bash
-            sudo visudo
-            echo "test ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
-            su test            
+            # apt-get install vim -y
+            # apt install sudo -y
+            # useradd test -m -s /bin/bash
+            # sudo visudo
+            # echo "test ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+            # su test            
             
             apt-get install -y make python3-pytest nghttp2-client git cpanminus libtool-bin libapr1-dev libaprutil1-dev \
             liblua5.3-dev libbrotli-dev libcurl4-openssl-dev libnghttp2-dev libjansson-dev \
