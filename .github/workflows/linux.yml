@@ -41,9 +41,6 @@ jobs:
           - name: Prefork MPM, all-modules (except cgid)
             config: --enable-mods-shared=reallyall --with-mpm=prefork --disable-cgid
           # -------------------------------------------------------------------------
-          - name: Worker MPM, all-modules
-            config: --enable-mods-shared=reallyall --with-mpm=worker
-          # -------------------------------------------------------------------------
           - name: Shared MPMs, all-modules
             config: --enable-mods-shared=reallyall --enable-mpms-shared=all
           # -------------------------------------------------------------------------
@@ -98,39 +95,6 @@ jobs:
               TEST_MALLOC=1
               CLEAR_CACHE=1
           # -------------------------------------------------------------------------
-          - name: Shared MPMs (event), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=event
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
-          # -------------------------------------------------------------------------
-          - name: Shared MPMs (worker), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=worker
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
-          # -------------------------------------------------------------------------
-          - name: Shared MPMs (prefork), pool-debug, SSL/TLS variants
-            config: --enable-mods-shared=reallyall --enable-mpms-shared=all --with-mpm=prefork
-            env: |
-              APR_VERSION=1.7.x
-              APR_CONFIG="--enable-pool-debug"
-              APU_VERSION=1.7.x
-              APU_CONFIG="--with-crypto --with-ldap"
-              TEST_MALLOC=1
-              TEST_SSL=1
-              CLEAR_CACHE=1
-          # -------------------------------------------------------------------------
           - name: litmus WebDAV tests
             config: --enable-dav --enable-dav-fs
             env: |
@@ -140,13 +104,6 @@ jobs:
           # -------------------------------------------------------------------------
           # MFLAGS= works around https://bz.apache.org/bugzilla/show_bug.cgi?id=63942
           ## TODO if: *condition_not_24x
-          - name: Regenerate ap_expr
-            config: --enable-mods-shared=reallyall --enable-maintainer-mode
-            notest-cflags: -Werror -Wno-deprecated-declarations
-            env: |
-              BUILDCONFIG="--with-regen-expr"
-              MFLAGS=
-          # -------------------------------------------------------------------------
           - name: APR 1.7.4, APR-util 1.6.3, LDAP
             config: --enable-mods-shared=reallyall
             pkgs: ldap-utils
@@ -165,13 +122,6 @@ jobs:
             env: |
               APR_VERSION=trunk
               APR_CONFIG="--with-crypto --enable-thread-debug"
-          # -------------------------------------------------------------------------
-          - name: UBSan
-            notest-cflags: -fsanitize=undefined -fno-sanitize-recover=undefined
-            config: --enable-mods-shared=reallyall --disable-http2
-            env: |
-              NOTEST_LIBS=-lubsan
-              TEST_UBSAN=1
           # -------------------------------------------------------------------------
           - name: ASan
             notest-cflags: -ggdb -fsanitize=address -fno-sanitize-recover=address -fno-omit-frame-pointer
